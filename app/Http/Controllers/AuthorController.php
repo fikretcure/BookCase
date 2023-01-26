@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\AuthorRepository;
-use Illuminate\Http\JsonResponse;
 
 class AuthorController extends Controller
 {
@@ -13,11 +12,18 @@ class AuthorController extends Controller
     private AuthorRepository $authorRepository;
 
     /**
-     * @param AuthorRepository $authorRepository
+     * @param  AuthorRepository  $authorRepository
      */
     public function __construct(AuthorRepository $authorRepository)
     {
         $this->authorRepository = $authorRepository;
     }
 
+    /**
+     * @return mixed
+     */
+    public function get(): mixed
+    {
+        return $this->authorRepository->get(request()->all());
+    }
 }
