@@ -25,7 +25,7 @@ class AuthorRepository
      */
     public function __construct(Author $author)
     {
-        $this->model = $author->query();
+        $this->model = $author;
     }
 
     /**
