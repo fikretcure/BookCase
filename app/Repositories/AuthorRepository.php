@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\CheckDisplayType;
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,13 +15,6 @@ class AuthorRepository
      * @var Builder
      */
     private Builder $model;
-
-    /**
-     * @var array|string[]
-     */
-    private array $selectData = [
-        'id', 'name', 'surname',
-    ];
 
     public function __construct()
     {
@@ -70,27 +64,17 @@ class AuthorRepository
     }
 
     /**
-     * @return Collection|array
+     * @param  array|null  $filtered
+     * @return mixed
      */
-    public function list(): Collection|array
+    public function get(array $filtered = null): mixed
     {
-        return $this->model->get($this->selectData);
-    }
+        $authors = $this->model->withCount('book')->with('book');
 
-    /**
-     * @return Collection|array
-     */
-    public function get(): Collection|array
-    {
-        return $this->model->withCount('book')->with('book')->get();
-    }
+        if (isset($filtered['full_name'])) {
+            $authors = $authors->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$filtered['full_name']}%");
+        }
 
-    /**
-     * @param  string|null  $full_name
-     * @return Collection|array
-     */
-    public function autoComplete(string $full_name = null): Collection|array
-    {
-        return $this->model->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%$full_name%")->get($this->selectData);
+        return (new CheckDisplayType())->handle(($filtered['displayType'] ?? null), $authors);
     }
 }
