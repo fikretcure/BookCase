@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Author extends Model
@@ -17,15 +18,23 @@ class Author extends Model
      */
     protected $guarded = [];
 
+    /**
+     * @var string[]
+     */
+    protected $appends = ['full_name'];
 
-    protected $appends = ["full_name"];
-
+    /**
+     * @return string
+     */
     public function getFullNameAttribute()
     {
-        return $this->attributes['name'] . " " . $this->attributes['surname'];
+        return $this->attributes['name'].' '.$this->attributes['surname'];
     }
 
-    public function book()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function book(): HasMany
     {
         return $this->hasMany(Book::class);
     }

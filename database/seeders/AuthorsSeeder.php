@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Repositories\AuthorRepository;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AuthorsSeeder extends Seeder
@@ -16,15 +15,15 @@ class AuthorsSeeder extends Seeder
     public function run()
     {
         (new AuthorRepository())->create([
-            "name" => "fikret",
-            "surname" => "cure",
-            "reg_code" => "123"
+            'name' => 'fikret',
+            'surname' => 'cure',
+            'reg_code' => '123',
         ]);
 
         (new AuthorRepository())->create([
-            "name" => "semiha",
-            "surname" => "cure",
-            "reg_code" => "124"
+            'name' => 'semiha',
+            'surname' => 'cure',
+            'reg_code' => '124',
         ]);
     }
 }
