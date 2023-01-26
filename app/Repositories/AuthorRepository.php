@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class AuthorRepository
 {
@@ -21,8 +22,13 @@ class AuthorRepository
         );
     }
 
-    public function all(): Model
+    public function list()
     {
-        return $this->model->all();
+        return $this->model->select("id", "name", "surname")->get();
+    }
+
+    public function autoComplete(string $full_name)
+    {
+        return $this->model->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$full_name}%")->get();
     }
 }
