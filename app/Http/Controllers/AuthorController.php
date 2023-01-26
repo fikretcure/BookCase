@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Repositories\AuthorRepository;
 
+/**
+ *
+ */
 class AuthorController extends Controller
 {
     /**
@@ -12,18 +15,19 @@ class AuthorController extends Controller
     private $authorRepository;
 
     /**
-     * @param  AuthorRepository  $authorRepository
+     * @param AuthorRepository $authorRepository
      */
     public function __construct(AuthorRepository $authorRepository)
     {
         $this->authorRepository = $authorRepository;
     }
 
+
     /**
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Http\JsonResponse
      */
     public function get()
     {
-        return $this->authorRepository->get();
+        return response()->json($this->authorRepository->get());
     }
 }

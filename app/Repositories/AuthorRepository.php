@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 class AuthorRepository
 {
     /**
-     * @var \Illuminate\Database\Eloquent\Builder
+     * @var Model|Author
      */
-    private $model;
+    private Model $model;
 
     /**
      * @var string[]
@@ -30,9 +30,9 @@ class AuthorRepository
 
     /**
      * @param  array  $attributes
-     * @return Model
+     * @return Author
      */
-    public function create(array $attributes): Model
+    public function create(array $attributes): Author
     {
         return $this->model->create(
             attributes: $attributes,
@@ -40,26 +40,26 @@ class AuthorRepository
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return object
      */
-    public function list()
+    public function list(): object
     {
         return $this->model->get($this->selectData);
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return object
      */
-    public function get()
+    public function get(): object
     {
         return $this->model->withCount('book')->with('book')->get();
     }
 
     /**
-     * @param  string  $full_name
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @param  string|null  $full_name
+     * @return object
      */
-    public function autoComplete(string $full_name)
+    public function autoComplete(string $full_name = null): object
     {
         return $this->model->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$full_name}%")->get($this->selectData);
     }
