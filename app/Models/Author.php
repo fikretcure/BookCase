@@ -16,4 +16,17 @@ class Author extends Model
      * @var array
      */
     protected $guarded = [];
+
+
+    protected $appends = ["full_name"];
+
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['name'] . " " . $this->attributes['surname'];
+    }
+
+    public function book()
+    {
+        return $this->hasMany(Book::class);
+    }
 }
