@@ -10,7 +10,7 @@ class AuthorsSeeder extends Seeder
     /**
      * @var AuthorRepository
      */
-    private $authorRepository;
+    private AuthorRepository $authorRepository;
 
     /**
      * @param  AuthorRepository  $authorRepository
