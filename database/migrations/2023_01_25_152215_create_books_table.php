@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('subject');
             $table->integer('page_count');
             $table->integer('author_id');
+            $table->string('avatar');
             $table->softDeletes();
             $table->timestamps();
         });
