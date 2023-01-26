@@ -52,6 +52,24 @@ class AuthorRepository
     }
 
     /**
+     * @param  int  $id
+     * @return bool
+     */
+    public function delete(int $id): bool
+    {
+        return $this->model->find($id)->delete();
+    }
+
+    /**
+     * @param  int  $id
+     * @return Model|Collection|Builder|array
+     */
+    public function show(int $id): Model|Collection|Builder|array
+    {
+        return $this->model->with('book')->find($id);
+    }
+
+    /**
      * @return Collection|array
      */
     public function list(): Collection|array
