@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class AuthorRepository
     private Builder $model;
 
     /**
-     * @var string[]
+     * @var array|string[]
      */
     private array $selectData = [
         'id', 'name', 'surname',
@@ -28,9 +29,9 @@ class AuthorRepository
 
     /**
      * @param  array  $attributes
-     * @return Model
+     * @return Model|Builder
      */
-    public function create(array $attributes): Model
+    public function create(array $attributes): Model|Builder
     {
         return $this->model->create(
             attributes: $attributes
@@ -38,26 +39,39 @@ class AuthorRepository
     }
 
     /**
-     * @return object
+     * @param  array  $attributes
+     * @param  int  $id
+     * @return Model|Collection|Builder|array|null
      */
-    public function list(): object
+    public function update(array $attributes, int $id): Model|Collection|Builder|array|null
+    {
+        $author = $this->model->find($id);
+        $author->update($attributes);
+
+        return $author->refresh();
+    }
+
+    /**
+     * @return Collection|array
+     */
+    public function list(): Collection|array
     {
         return $this->model->get($this->selectData);
     }
 
     /**
-     * @return object
+     * @return Collection|array
      */
-    public function get(): object
+    public function get(): Collection|array
     {
         return $this->model->withCount('book')->with('book')->get();
     }
 
     /**
      * @param  string|null  $full_name
-     * @return object
+     * @return Collection|array
      */
-    public function autoComplete(string $full_name = null): object
+    public function autoComplete(string $full_name = null): Collection|array
     {
         return $this->model->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%$full_name%")->get($this->selectData);
     }

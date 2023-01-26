@@ -13,18 +13,11 @@ class AuthorController extends Controller
     private AuthorRepository $authorRepository;
 
     /**
-     * @param  AuthorRepository  $authorRepository
+     * @param AuthorRepository $authorRepository
      */
     public function __construct(AuthorRepository $authorRepository)
     {
         $this->authorRepository = $authorRepository;
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get(): JsonResponse
-    {
-        return response()->json($this->authorRepository->get());
-    }
 }
