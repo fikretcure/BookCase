@@ -20,9 +20,12 @@ class AuthorRepository
         'id', 'name', 'surname',
     ];
 
-    public function __construct()
+    /**
+     * @param  Author  $author
+     */
+    public function __construct(Author $author)
     {
-        $this->model = Author::query();
+        $this->model = $author->query();
     }
 
     /**
