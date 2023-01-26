@@ -3,40 +3,37 @@
 namespace App\Repositories;
 
 use App\Models\Author;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class AuthorRepository
 {
-
     /**
-     * @var Model|Author
+     * @var Builder
      */
-    private Model $model;
+    private Builder $model;
 
     /**
      * @var string[]
      */
-    private $selectData = [
+    private array $selectData = [
         'id', 'name', 'surname',
     ];
 
-    /**
-     * @param  Author  $author
-     */
-    public function __construct(Author $author)
+    public function __construct()
     {
-        $this->model = $author;
+        $this->model = Author::query();
     }
 
     /**
      * @param  array  $attributes
-     * @return Author
+     * @return Model
      */
-    public function create(array $attributes): Author
+    public function create(array $attributes): Model
     {
         return $this->model->create(
-            attributes: $attributes,
+            attributes: $attributes
         );
     }
 
@@ -62,6 +59,6 @@ class AuthorRepository
      */
     public function autoComplete(string $full_name = null): object
     {
-        return $this->model->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$full_name}%")->get($this->selectData);
+        return $this->model->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%$full_name%")->get($this->selectData);
     }
 }

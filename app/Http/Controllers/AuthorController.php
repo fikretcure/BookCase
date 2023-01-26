@@ -5,12 +5,8 @@ namespace App\Http\Controllers;
 use App\Repositories\AuthorRepository;
 use Illuminate\Http\JsonResponse;
 
-/**
- *
- */
 class AuthorController extends Controller
 {
-
     /**
      * @var AuthorRepository
      */
