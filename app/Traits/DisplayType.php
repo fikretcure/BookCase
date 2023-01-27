@@ -15,6 +15,6 @@ trait DisplayType
      */
     public function setDisplay(string $displayType = null, Builder $model = null): array|LengthAwarePaginator|Collection
     {
-        return $displayType == 'list' ? $model->get() : $model->paginate(request()->per_page ?? 10);
+        return $displayType == 'list' ? $model->get() : $model->paginate(request()->query('per_page') ?? 10);
     }
 }
