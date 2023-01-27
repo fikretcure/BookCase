@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\AuthorRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class AuthorController extends Controller
 {
@@ -20,9 +22,9 @@ class AuthorController extends Controller
     }
 
     /**
-     * @return mixed
+     * @return array|LengthAwarePaginator|Collection
      */
-    public function get(): mixed
+    public function get(): array|LengthAwarePaginator|Collection
     {
         return $this->authorRepository->get(request()->all());
     }
