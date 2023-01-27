@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthorController::class)->group(function () {
-    Route::get('/authors', 'get');
+Route::prefix('authors')->controller(AuthorController::class)->group(function () {
+    Route::get(null, 'get');
+    Route::post(null, 'create');
 });
