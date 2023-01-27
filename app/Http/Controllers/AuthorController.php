@@ -14,7 +14,7 @@ class AuthorController extends Controller
     private AuthorRepository $authorRepository;
 
     /**
-     * @param  AuthorRepository  $authorRepository
+     * @param AuthorRepository $authorRepository
      */
     public function __construct(AuthorRepository $authorRepository)
     {
@@ -26,6 +26,6 @@ class AuthorController extends Controller
      */
     public function get(): array|LengthAwarePaginator|Collection
     {
-        return $this->authorRepository->get(request()->all());
+        return $this->authorRepository->get(request()->query());
     }
 }
