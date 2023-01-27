@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('author', [AuthorController::class, 'get']);
-Route::put('author/{id}', [AuthorController::class, 'update']);
-Route::get('author/auto-complete', [AuthorController::class, 'autoComplete']);
+Route::controller(AuthorController::class)->group(function () {
+    Route::get('/authors', 'get');
+});
