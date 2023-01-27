@@ -25,17 +25,17 @@ class AuthorsSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->authorRepository->create([
-            'name' => 'fikret',
-            'surname' => 'cure',
+            'name' => 'Fikret',
+            'surname' => 'Cüre',
             'reg_code' => '123',
         ]);
 
         $this->authorRepository->create([
-            'name' => 'semiha',
-            'surname' => 'cure',
+            'name' => 'Semiha',
+            'surname' => 'Cüre',
             'reg_code' => '124',
         ]);
     }
