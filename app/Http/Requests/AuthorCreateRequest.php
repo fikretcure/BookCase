@@ -33,6 +33,10 @@ class AuthorCreateRequest extends FormRequest
             'reg_code' => [
                 'required',
             ],
+            'avatar' => [
+                'nullable',
+                "string"
+            ],
         ];
     }
 }
