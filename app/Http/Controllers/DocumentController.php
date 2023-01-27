@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\DocumentService;
+use Illuminate\Support\Stringable;
 
 /**
  *
@@ -10,10 +11,23 @@ use App\Services\DocumentService;
 class DocumentController extends Controller
 {
     /**
-     * @return mixed
+     * @var DocumentService
      */
-    public function upload(): mixed
+    private DocumentService $documentService;
+
+    /**
+     * @param DocumentService $documentService
+     */
+    public function __construct(DocumentService $documentService)
     {
-        return (new DocumentService())->upload();
+        $this->documentService = $documentService;
+    }
+
+    /**
+     * @return Stringable
+     */
+    public function upload(): Stringable
+    {
+        return $this->documentService->upload();
     }
 }
