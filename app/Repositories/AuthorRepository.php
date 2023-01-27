@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Helpers\CheckDisplayType;
 use App\Models\Author;
+use App\Traits\DisplayType;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 class AuthorRepository
 {
+    use DisplayType;
+
     /**
      * @var Builder
      */
@@ -54,7 +56,7 @@ class AuthorRepository
             $authors = $authors->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$filtered['full_name']}%");
         }
 
-        return (new CheckDisplayType())->handle(($filtered['displayType'] ?? null), $authors);
+        return $this->setDisplay(($filtered['displayType'] ?? null), $authors);
     }
 
     /**
