@@ -26,15 +26,21 @@ class AuthorController extends Controller
      * @var AuthorService
      */
     private AuthorService $authorService;
+    /**
+     * @var DocumentService
+     */
+    private DocumentService $documentService;
 
     /**
      * @param AuthorRepository $authorRepository
      * @param AuthorService $authorService
+     * @param DocumentService $documentService
      */
-    public function __construct(AuthorRepository $authorRepository, AuthorService $authorService)
+    public function __construct(AuthorRepository $authorRepository, AuthorService $authorService,DocumentService $documentService)
     {
         $this->authorRepository = $authorRepository;
         $this->authorService = $authorService;
+        $this->documentService = $documentService;
     }
 
     /**
@@ -52,7 +58,10 @@ class AuthorController extends Controller
      */
     public function create(AuthorCreateRequest $request): Model|Builder
     {
-        (new DocumentService())->hasDocument($request->validated("avatar"));
+        if ($request->filled("avatar")) {
+            $this->documentService->hasDocument($request->validated("avatar"));
+        }
+
         $author = $this->authorRepository->create($request->validated());
         $this->authorService->generateAvatarFromId($author->id, 123);
         return $author;
