@@ -26,12 +26,11 @@ class AuthorCreateRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                'string'
             ],
             'surname' => [
                 'required',
-            ],
-            'reg_code' => [
-                'required',
+                'string'
             ],
             'avatar' => [
                 'nullable',
