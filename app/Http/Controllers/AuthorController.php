@@ -60,11 +60,9 @@ class AuthorController extends Controller
     {
         if ($request->filled("avatar")) {
             $this->documentService->hasDocument($request->validated("avatar"));
-            $this->documentService->fileMove("docs/".$request->validated("avatar"),"avatar/".$request->validated("avatar"));
+            $this->documentService->fileMove("docs/" . $request->validated("avatar"), "avatar/" . $request->validated("avatar"));
         }
 
-        $author = $this->authorRepository->create($request->validated());
-        $this->authorService->generateAvatarFromId($author->id, 123);
-        return $author;
+        return $this->authorRepository->create($request->validated());
     }
 }
