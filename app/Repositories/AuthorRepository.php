@@ -41,7 +41,7 @@ class AuthorRepository
      */
     public function show(int $id): Model|Collection|Builder|array
     {
-        return $this->model->with('book')->find($id);
+        return $this->model->with('book')->findOrFail($id);
     }
 
     /**
