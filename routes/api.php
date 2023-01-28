@@ -18,7 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('authors')->controller(AuthorController::class)->group(function () {
     Route::get(null, 'get');
     Route::post(null, 'create');
-    Route::get("{id}", 'show')->whereNumber('id');
+
+    Route::whereNumber('id')->group(function () {
+        Route::get("{id}", 'show');
+        Route::delete("{id}", 'delete');
+        Route::put("{id}", 'updated');
+    });
 });
 
 Route::post('upload', [DocumentController::class, 'upload']);
