@@ -65,4 +65,13 @@ class AuthorController extends Controller
 
         return $this->authorRepository->create($request->validated());
     }
+
+    /**
+     * @param $id
+     * @return Model|Collection|Builder|array
+     */
+    public function show($id): Model|Collection|Builder|array
+    {
+        return $this->authorRepository->show($id);
+    }
 }
