@@ -36,7 +36,7 @@ class AuthorController extends Controller
      * @param AuthorService $authorService
      * @param DocumentService $documentService
      */
-    public function __construct(AuthorRepository $authorRepository, AuthorService $authorService,DocumentService $documentService)
+    public function __construct(AuthorRepository $authorRepository, AuthorService $authorService, DocumentService $documentService)
     {
         $this->authorRepository = $authorRepository;
         $this->authorService = $authorService;
@@ -60,6 +60,7 @@ class AuthorController extends Controller
     {
         if ($request->filled("avatar")) {
             $this->documentService->hasDocument($request->validated("avatar"));
+            $this->documentService->fileMove("docs/".$request->validated("avatar"),"avatar/".$request->validated("avatar"));
         }
 
         $author = $this->authorRepository->create($request->validated());
