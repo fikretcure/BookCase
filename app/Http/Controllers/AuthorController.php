@@ -67,10 +67,10 @@ class AuthorController extends Controller
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return Model|Collection|Builder|array
      */
-    public function show($id): Model|Collection|Builder|array
+    public function show(int $id): Model|Collection|Builder|array
     {
         return $this->authorRepository->show($id);
     }
