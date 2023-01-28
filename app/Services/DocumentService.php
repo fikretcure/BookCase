@@ -15,12 +15,13 @@ class DocumentService
 {
 
     /**
+     * @param $document
      * @return Stringable
      */
-    public function upload(): Stringable
+    public function upload($document): Stringable
     {
-        $extension = request()->document->getClientOriginalExtension();
-        $path = request()->document->storeAs('docs', rand() . '.' . $extension, 'public');
+        $extension =$document->getClientOriginalExtension();
+        $path =$document->storeAs('docs', rand() . '.' . $extension, 'public');
         return Str::of($path)->afterLast('docs/');
     }
 
@@ -31,6 +32,6 @@ class DocumentService
      */
     public function hasDocument($path): bool
     {
-        return throw_unless(Storage::disk('public')->exists("docs/" . $path), Exception::class, 'Foo is true');
+        return throw_unless(Storage::disk('public')->exists("docs/" . $path), Exception::class, 'Dostum dosya yok !!');
     }
 }
