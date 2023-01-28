@@ -25,18 +25,18 @@ class AuthorRepository
     }
 
     /**
-     * @param  array  $attributes
+     * @param array $attributes
      * @return Model|Builder
      */
     public function create(array $attributes): Model|Builder
     {
         return $this->model->create(
-            attributes: $attributes
+            attributes: $attributes + ["reg_code" => rand()]
         );
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return Model|Collection|Builder|array
      */
     public function show(int $id): Model|Collection|Builder|array
@@ -45,7 +45,7 @@ class AuthorRepository
     }
 
     /**
-     * @param  array|null  $filtered
+     * @param array|null $filtered
      * @return Collection|array|LengthAwarePaginator
      */
     public function get(array $filtered = null): Collection|array|LengthAwarePaginator
@@ -60,8 +60,8 @@ class AuthorRepository
     }
 
     /**
-     * @param  array  $attributes
-     * @param  int  $id
+     * @param array $attributes
+     * @param int $id
      * @return Model|Collection|Builder|array|null
      */
     public function update(array $attributes, int $id): Model|Collection|Builder|array|null
@@ -73,7 +73,7 @@ class AuthorRepository
     }
 
     /**
-     * @param  int  $id
+     * @param int $id
      * @return bool
      */
     public function delete(int $id): bool
