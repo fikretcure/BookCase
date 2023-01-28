@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UploadDocumentRequest;
 use App\Services\DocumentService;
 use Illuminate\Support\Stringable;
 
@@ -24,10 +25,11 @@ class DocumentController extends Controller
     }
 
     /**
+     * @param UploadDocumentRequest $request
      * @return Stringable
      */
-    public function upload(): Stringable
+    public function upload(UploadDocumentRequest $request): Stringable
     {
-        return $this->documentService->upload();
+        return $this->documentService->upload($request->validated("document"));
     }
 }
