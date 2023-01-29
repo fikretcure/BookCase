@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+/**
+ *
+ */
 enum RouteName: string
 {
     case author = "Yazar";
@@ -12,7 +15,11 @@ enum RouteName: string
     case create = "Ekleme";
 
 
-    public static function makeActionName($names)
+    /**
+     * @param $names
+     * @return mixed
+     */
+    public static function makeActionName($names): mixed
     {
         return str()->of($names)->explode('-')->map(function ($name, $key) {
             return (collect(self::cases())->map(function ($item, $key) use ($name) {

@@ -15,7 +15,7 @@ class AuthCanMiddleware
      * Handle an incoming request.
      *
      * @param Request $request
-     * @param \Closure(Request): (Response|RedirectResponse) $next
+     * @param Closure(Request): (Response|RedirectResponse) $next
      * @param $role
      * @return JsonResponse
      */
