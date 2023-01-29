@@ -20,7 +20,7 @@ Route::prefix('authors')->controller(AuthorController::class)->group(function ()
     Route::post(null, 'create');
     Route::get("{id}", 'show');
     Route::delete("{id}", 'delete');
-    Route::put("{id}", 'updated');
+    Route::put("{id}", 'update');
 });
 
 Route::post('upload', [DocumentController::class, 'upload']);

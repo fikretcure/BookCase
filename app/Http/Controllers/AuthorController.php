@@ -81,7 +81,7 @@ class AuthorController extends Controller
      * @param int $id
      * @return Model|Collection|Builder|array|null
      */
-    public function updated(AuthorUpdateRequest $request, int $id): Model|Collection|Builder|array|null
+    public function update(AuthorUpdateRequest $request, int $id): Model|Collection|Builder|array|null
     {
         return $this->authorRepository->update($request->validated(), $id);
     }
