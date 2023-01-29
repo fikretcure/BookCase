@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('authors')->controller(AuthorController::class)->group(function () {
-    Route::get(null, 'get');
-    Route::post(null, 'create');
-    Route::get("{id}", 'show');
-    Route::delete("{id}", 'delete');
-    Route::put("{id}", 'update');
+    Route::middleware('auth.can:authors-get')->get(null, 'get');
+    Route::middleware('auth.can:authors-create')->post(null, 'create');
+    Route::middleware('auth.can:authors-show')->get("{id}", 'show');
+    Route::middleware('auth.can:authors-delete')->delete("{id}", 'delete');
+    Route::middleware('auth.can:authors-update')->put("{id}", 'update');
 });
 
 Route::post('upload', [DocumentController::class, 'upload']);
