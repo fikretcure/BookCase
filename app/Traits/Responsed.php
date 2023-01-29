@@ -94,7 +94,7 @@ trait Responsed
         return response()->json([
             "info" => request()->auth_can . " " . $this->info_message,
             "message" => $this->message ?? null,
-            "data" => $this->data,
+            "data" => $this->data ?? null,
         ], $this->status);
 
     }
