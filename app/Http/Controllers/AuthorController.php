@@ -85,4 +85,14 @@ class AuthorController extends Controller
     {
         return $this->authorRepository->update($request->validated(), $id);
     }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id): bool
+    {
+        return $this->authorRepository->delete($id);
+    }
+
 }
