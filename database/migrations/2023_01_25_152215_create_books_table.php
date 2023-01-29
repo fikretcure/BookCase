@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('subject');
             $table->integer('page_count');
             $table->foreignId('author_id')->constrained();
+            $table->string('reg_code');
             $table->softDeletes();
             $table->timestamps();
         });
