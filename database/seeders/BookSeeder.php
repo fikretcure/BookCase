@@ -29,6 +29,24 @@ class BookSeeder extends Seeder
             "name" => "Nefret Yağıyor",
             "subject" => "İntikam",
             "page_count" => rand(),
+            "author_id" => 1,
+            "reg_code" => rand(),
+        ]);
+
+        (new BookRepository())->create([
+            "avatar" => rand(),
+            "name" => "Kırmızı Pencere",
+            "subject" => "Sosyoloji",
+            "page_count" => rand(),
+            "author_id" => 2,
+            "reg_code" => rand(),
+        ]);
+
+        (new BookRepository())->create([
+            "avatar" => rand(),
+            "name" => "Güzel Babam",
+            "subject" => "Aile",
+            "page_count" => rand(),
             "author_id" => 2,
             "reg_code" => rand(),
         ]);
