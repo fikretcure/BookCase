@@ -9,6 +9,7 @@ enum RouteName: string
     case delete = "Silme";
     case update = "Güncelleme";
     case show = "Getirme";
+    case create = "Ekleme";
 
 
     public static function makeActionName($names)
