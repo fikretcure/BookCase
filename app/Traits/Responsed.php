@@ -14,10 +14,16 @@ trait Responsed
      * @var
      */
     private $data;
+
     /**
-     * @var
+     * @var string
      */
-    private $message;
+    private string $message;
+
+    /**
+     * @var string
+     */
+    private string $info_message;
 
 
     /**
@@ -33,6 +39,7 @@ trait Responsed
     {
         $this->data = $data;
         $this->status = 200;
+        $this->info_message = "Başarılı";
 
         return $this;
     }
@@ -46,16 +53,17 @@ trait Responsed
     {
         $this->data = $data;
         $this->status = 404;
+        $this->info_message = "Başarısız";
 
         return $this;
     }
 
 
     /**
-     * @param $message
+     * @param string|null $message
      * @return $this
      */
-    public function mes($message = null): static
+    public function mes(string $message = null): static
     {
         $this->message = $message;
 
@@ -70,6 +78,7 @@ trait Responsed
     {
         $this->message = $message;
         $this->status = 404;
+        $this->info_message = "Başarısız";
 
         return $this;
     }
@@ -83,7 +92,8 @@ trait Responsed
         $this->status = $status ? $status : $this->status;
 
         return response()->json([
-            "message" => $this->message,
+            "info" => request()->auth_can . " " . $this->info_message,
+            "message" => $this->message ?? null,
             "data" => $this->data,
         ], $this->status);
 
