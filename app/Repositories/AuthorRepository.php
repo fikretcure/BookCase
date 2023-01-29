@@ -66,7 +66,7 @@ class AuthorRepository
      */
     public function update(array $attributes, int $id): Model|Collection|Builder|array|null
     {
-        $author = $this->model->find($id);
+        $author = $this->model->findOrFail($id);
         $author->update($attributes);
 
         return $author->refresh();
