@@ -6,11 +6,10 @@ use App\Http\Requests\AuthorCreateRequest;
 use App\Http\Requests\AuthorUpdateRequest;
 use App\Repositories\AuthorRepository;
 use App\Services\AuthorService;
-use App\Services\DocumentService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Throwable;
 
 /**
@@ -39,11 +38,11 @@ class AuthorController extends Controller
     }
 
     /**
-     * @return array|LengthAwarePaginator|Collection
+     * @return JsonResponse
      */
-    public function get(): array|LengthAwarePaginator|Collection
+    public function get(): JsonResponse
     {
-        return $this->authorRepository->get(request()->query());
+        return $this->success($this->authorRepository->get(request()->query()))->send();
     }
 
     /**
