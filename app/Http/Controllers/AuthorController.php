@@ -27,21 +27,15 @@ class AuthorController extends Controller
      * @var AuthorService
      */
     private AuthorService $authorService;
-    /**
-     * @var DocumentService
-     */
-    private DocumentService $documentService;
 
     /**
      * @param AuthorRepository $authorRepository
      * @param AuthorService $authorService
-     * @param DocumentService $documentService
      */
-    public function __construct(AuthorRepository $authorRepository, AuthorService $authorService, DocumentService $documentService)
+    public function __construct(AuthorRepository $authorRepository, AuthorService $authorService)
     {
         $this->authorRepository = $authorRepository;
         $this->authorService = $authorService;
-        $this->documentService = $documentService;
     }
 
     /**
@@ -59,10 +53,7 @@ class AuthorController extends Controller
      */
     public function create(AuthorCreateRequest $request): Model|Builder
     {
-        if ($request->filled("avatar")) {
-            $this->documentService->hasDocument($request->validated("avatar"));
-            $this->documentService->fileMove("docs/" . $request->validated("avatar"), "avatar/" . $request->validated("avatar"));
-        }
+        $this->authorService->checkAvatar($request->validated("avatar"));
 
         return $this->authorRepository->create($request->validated());
     }
@@ -80,9 +71,12 @@ class AuthorController extends Controller
      * @param AuthorUpdateRequest $request
      * @param int $id
      * @return Model|Collection|Builder|array|null
+     * @throws Throwable
      */
     public function update(AuthorUpdateRequest $request, int $id): Model|Collection|Builder|array|null
     {
+        $this->authorService->checkAvatar($request->validated("avatar"));
+
         return $this->authorRepository->update($request->validated(), $id);
     }
 
