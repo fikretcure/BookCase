@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthorCreateRequest;
+use App\Http\Requests\AuthorUpdateRequest;
 use App\Repositories\AuthorRepository;
 use App\Services\AuthorService;
 use App\Services\DocumentService;
@@ -73,5 +74,15 @@ class AuthorController extends Controller
     public function show(int $id): Model|Collection|Builder|array
     {
         return $this->authorRepository->show($id);
+    }
+
+    /**
+     * @param AuthorUpdateRequest $request
+     * @param int $id
+     * @return Model|Collection|Builder|array|null
+     */
+    public function updated(AuthorUpdateRequest $request, int $id): Model|Collection|Builder|array|null
+    {
+        return $this->authorRepository->update($request->validated(), $id);
     }
 }
