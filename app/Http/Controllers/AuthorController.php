@@ -6,9 +6,6 @@ use App\Http\Requests\AuthorCreateRequest;
 use App\Http\Requests\AuthorUpdateRequest;
 use App\Repositories\AuthorRepository;
 use App\Services\AuthorService;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -47,45 +44,45 @@ class AuthorController extends Controller
 
     /**
      * @param AuthorCreateRequest $request
-     * @return Model|Builder
+     * @return JsonResponse
      * @throws Throwable
      */
-    public function create(AuthorCreateRequest $request): Model|Builder
+    public function create(AuthorCreateRequest $request): JsonResponse
     {
         $this->authorService->checkAvatar($request->validated("avatar"));
 
-        return $this->authorRepository->create($request->validated());
+        return $this->success($this->authorRepository->create($request->validated()))->send();
     }
 
     /**
      * @param int $id
-     * @return Model|Collection|Builder|array
+     * @return JsonResponse
      */
-    public function show(int $id): Model|Collection|Builder|array
+    public function show(int $id): JsonResponse
     {
-        return $this->authorRepository->show($id);
+        return $this->success($this->authorRepository->show($id))->send();
     }
 
     /**
      * @param AuthorUpdateRequest $request
      * @param int $id
-     * @return Model|Collection|Builder|array|null
+     * @return JsonResponse
      * @throws Throwable
      */
-    public function update(AuthorUpdateRequest $request, int $id): Model|Collection|Builder|array|null
+    public function update(AuthorUpdateRequest $request, int $id): JsonResponse
     {
         $this->authorService->checkAvatar($request->validated("avatar"));
 
-        return $this->authorRepository->update($request->validated(), $id);
+        return $this->success($this->authorRepository->update($request->validated(), $id))->send();
     }
 
     /**
      * @param int $id
-     * @return bool
+     * @return JsonResponse
      */
-    public function delete(int $id): bool
+    public function delete(int $id): JsonResponse
     {
-        return $this->authorRepository->delete($id);
+        return $this->success($this->authorRepository->delete($id))->send();
     }
 
 }
