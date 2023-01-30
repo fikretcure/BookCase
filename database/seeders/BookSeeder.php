@@ -21,7 +21,6 @@ class BookSeeder extends Seeder
             "subject" => "Romantik",
             "page_count" => rand(),
             "author_id" => 1,
-            "reg_code" => rand(),
         ]);
 
         (new BookRepository())->create([
@@ -30,7 +29,6 @@ class BookSeeder extends Seeder
             "subject" => "İntikam",
             "page_count" => rand(),
             "author_id" => 1,
-            "reg_code" => rand(),
         ]);
 
         (new BookRepository())->create([
@@ -39,7 +37,6 @@ class BookSeeder extends Seeder
             "subject" => "Sosyoloji",
             "page_count" => rand(),
             "author_id" => 2,
-            "reg_code" => rand(),
         ]);
 
         (new BookRepository())->create([
@@ -48,7 +45,6 @@ class BookSeeder extends Seeder
             "subject" => "Aile",
             "page_count" => rand(),
             "author_id" => 2,
-            "reg_code" => rand(),
         ]);
     }
 }
