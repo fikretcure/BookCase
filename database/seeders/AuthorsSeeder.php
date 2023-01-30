@@ -30,13 +30,11 @@ class AuthorsSeeder extends Seeder
         $this->authorRepository->create([
             'name' => 'Fikret',
             'surname' => 'Cüre',
-            'reg_code' => '123',
         ]);
 
         $this->authorRepository->create([
             'name' => 'Semiha',
             'surname' => 'Cüre',
-            'reg_code' => '124',
         ]);
     }
 }
