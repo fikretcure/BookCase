@@ -29,4 +29,9 @@ class Book extends Model
     {
         return $this->belongsTo(Author::class);
     }
+
+    /**
+     * @var string
+     */
+    public static string $reg_code = "K";
 }
