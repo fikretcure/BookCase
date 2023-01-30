@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Author;
 use App\Traits\DisplayType;
+use App\Traits\Filtered;
 use App\Traits\GenerateRegCode;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,6 +16,7 @@ class AuthorRepository
 {
     use DisplayType;
     use GenerateRegCode;
+    use Filtered;
 
     /**
      * @var Builder
@@ -57,6 +59,8 @@ class AuthorRepository
         if (isset($filtered['full_name'])) {
             $authors = $authors->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$filtered['full_name']}%");
         }
+
+        $authors = $this->regCode($authors);
 
         return $this->setDisplay(($filtered['displayType'] ?? null), $authors);
     }
