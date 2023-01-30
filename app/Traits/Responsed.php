@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Helpers\RouteName;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -92,7 +93,7 @@ trait Responsed
         $this->status = $status ? $status : $this->status;
 
         return response()->json([
-            "info" => request()->auth_can . " " . $this->info_message,
+            "info" => RouteName::makeActionName() . " " . $this->info_message,
             "message" => $this->message ?? null,
             "data" => $this->data ?? null,
         ], $this->status);

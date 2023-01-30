@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('authors')->controller(AuthorController::class)->group(function () {
-    Route::middleware('auth.can:author-get')->get(null, 'get');
-    Route::middleware('auth.can:author-create')->post(null, 'create');
-    Route::middleware('auth.can:author-show')->get("{id}", 'show');
-    Route::middleware('auth.can:author-delete')->delete("{id}", 'delete');
-    Route::middleware('auth.can:author-update')->put("{id}", 'update');
+Route::name("authors.")->prefix('authors')->controller(AuthorController::class)->group(function () {
+    Route::name("get")->get(null, 'get');
+    Route::name("create")->post(null, 'create');
+    Route::name("show")->get("{id}", 'show');
+    Route::name("delete")->delete("{id}", 'delete');
+    Route::name("update")->put("{id}", 'update');
 });
 
 Route::post('upload', [DocumentController::class, 'upload']);
