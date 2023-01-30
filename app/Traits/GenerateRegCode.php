@@ -13,9 +13,7 @@ trait GenerateRegCode
      */
     public function generateRegCode($model): string
     {
-        $max_id = $model::query()->withTrashed()->max("id") + 1;
-
-        $last_code = str_repeat("0", (4 - strlen($max_id)));
-        return $model::$reg_code . $last_code . $max_id;
+        $last_id = $model::query()->withTrashed()->max("id") + 1;
+        return $model::$reg_code .str_repeat("0", (4 - strlen($last_id))) . $last_id;
     }
 }
