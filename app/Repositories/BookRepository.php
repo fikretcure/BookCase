@@ -3,18 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Book;
-use App\Traits\DisplayType;
-use App\Traits\GenerateRegCode;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
-class BookRepository
+class BookRepository extends Repository
 {
-    use DisplayType;
-    use GenerateRegCode;
 
     /**
      * @var Builder

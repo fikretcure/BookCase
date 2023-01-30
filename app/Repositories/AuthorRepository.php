@@ -3,20 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Author;
-use App\Traits\DisplayType;
-use App\Traits\Filtered;
-use App\Traits\GenerateRegCode;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class AuthorRepository
+class AuthorRepository extends Repository
 {
-    use DisplayType;
-    use GenerateRegCode;
-    use Filtered;
 
     /**
      * @var Builder
