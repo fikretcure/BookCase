@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\DocumentController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::name("authors.")->prefix('authors')->controller(AuthorController::class)->group(function () {
+    Route::name("get")->get(null, 'get');
+    Route::name("create")->post(null, 'create');
+    Route::name("show")->get("{id}", 'show');
+    Route::name("delete")->delete("{id}", 'delete');
+    Route::name("update")->put("{id}", 'update');
+});
+
+Route::name("books.")->prefix('books')->controller(BookController::class)->group(function () {
     Route::name("get")->get(null, 'get');
     Route::name("create")->post(null, 'create');
     Route::name("show")->get("{id}", 'show');
