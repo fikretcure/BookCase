@@ -4,14 +4,17 @@ namespace App\Repositories;
 
 use App\Models\Book;
 use App\Traits\DisplayType;
+use App\Traits\GenerateRegCode;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class BookRepository
 {
     use DisplayType;
+    use GenerateRegCode;
 
     /**
      * @var Builder
@@ -30,7 +33,7 @@ class BookRepository
     public function create(array $attributes): Model|Builder
     {
         return $this->model->create(
-            attributes: $attributes + ["reg_code" => rand()]
+            attributes: ["reg_code" => $this->generateRegCode(Book::class)] + $attributes
         );
     }
 
@@ -40,7 +43,7 @@ class BookRepository
      */
     public function show(int $id): Model|Collection|Builder|array
     {
-        return $this->model->with('author')->findOrFail($id);
+        return $this->model->withCount('author')->with('author')->findOrFail($id);
     }
 
     /**
@@ -49,9 +52,10 @@ class BookRepository
      */
     public function get(array $filtered = null): Collection|array|LengthAwarePaginator
     {
-        $authors = $this->model->withCount('author')->with('author');
+        $books = $this->model->withCount('author')->with('author');
 
-        return $this->setDisplay(($filtered['displayType'] ?? null), $authors);
+
+        return $this->setDisplay(($filtered['displayType'] ?? null), $books);
     }
 
     /**
@@ -61,10 +65,10 @@ class BookRepository
      */
     public function update(array $attributes, int $id): Model|Collection|Builder|array|null
     {
-        $author = $this->model->findOrFail($id);
-        $author->update($attributes);
+        $book = $this->model->findOrFail($id);
+        $book->update($attributes);
 
-        return $author->refresh();
+        return $book->refresh();
     }
 
     /**
