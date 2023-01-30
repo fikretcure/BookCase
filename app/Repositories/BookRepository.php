@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ *
+ */
 class BookRepository extends Repository
 {
 
@@ -16,6 +19,9 @@ class BookRepository extends Repository
      */
     private Builder $model;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->model = Book::query();
@@ -42,15 +48,14 @@ class BookRepository extends Repository
     }
 
     /**
-     * @param array|null $filtered
-     * @return Collection|array|LengthAwarePaginator
+     * @return Collection|LengthAwarePaginator|array
      */
-    public function get(array $filtered = null): Collection|array|LengthAwarePaginator
+    public function get(): Collection|LengthAwarePaginator|array
     {
         $books = $this->model->with('author');
+        $books = $this->regCode($books);
 
-
-        return $this->setDisplay(($filtered['displayType'] ?? null), $books);
+        return $this->setDisplay($books);
     }
 
     /**

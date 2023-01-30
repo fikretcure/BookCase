@@ -56,7 +56,7 @@ class AuthorRepository extends Repository
 
         $authors = $this->regCode($authors);
 
-        return $this->setDisplay(($filtered['displayType'] ?? null), $authors);
+        return $this->setDisplay($authors);
     }
 
     /**
