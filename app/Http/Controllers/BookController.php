@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthorUpdateRequest;
 use App\Http\Requests\BookCreateRequest;
+use App\Http\Requests\BookUpdateRequest;
 use App\Repositories\BookRepository;
 use Illuminate\Http\JsonResponse;
-use Throwable;
 
 /**
  *
@@ -55,12 +54,11 @@ class BookController extends Controller
     }
 
     /**
-     * @param AuthorUpdateRequest $request
+     * @param BookUpdateRequest $request
      * @param int $id
      * @return JsonResponse
-     * @throws Throwable
      */
-    public function update(AuthorUpdateRequest $request, int $id): JsonResponse
+    public function update(BookUpdateRequest $request, int $id): JsonResponse
     {
 
         return $this->success($this->bookRepository->update($request->validated(), $id))->send();
