@@ -16,7 +16,6 @@ class BookSeeder extends Seeder
     public function run()
     {
         (new BookRepository())->create([
-            "avatar" => rand(),
             "name" => "Akyazıda Aşk",
             "subject" => "Romantik",
             "page_count" => rand(),
@@ -24,7 +23,6 @@ class BookSeeder extends Seeder
         ]);
 
         (new BookRepository())->create([
-            "avatar" => rand(),
             "name" => "Nefret Yağıyor",
             "subject" => "İntikam",
             "page_count" => rand(),
@@ -32,7 +30,6 @@ class BookSeeder extends Seeder
         ]);
 
         (new BookRepository())->create([
-            "avatar" => rand(),
             "name" => "Kırmızı Pencere",
             "subject" => "Sosyoloji",
             "page_count" => rand(),
@@ -40,7 +37,6 @@ class BookSeeder extends Seeder
         ]);
 
         (new BookRepository())->create([
-            "avatar" => rand(),
             "name" => "Güzel Babam",
             "subject" => "Aile",
             "page_count" => rand(),

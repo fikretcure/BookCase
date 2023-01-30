@@ -44,7 +44,7 @@ class BookRepository extends Repository
      */
     public function show(int $id): Model|Collection|Builder|array
     {
-        return $this->model->with('author')->findOrFail($id);
+        return $this->model->withCount("document")->with('author', "document")->findOrFail($id);
     }
 
     /**
@@ -52,7 +52,7 @@ class BookRepository extends Repository
      */
     public function get(): Collection|LengthAwarePaginator|array
     {
-        $books = $this->model->with('author');
+        $books = $this->model->withCount("document")->with('author', "document");
         $books = $this->regCode($books);
 
         return $this->setDisplay($books);
