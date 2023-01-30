@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthorCreateRequest;
 use App\Http\Requests\AuthorUpdateRequest;
-use App\Repositories\AuthorRepository;
+use App\Http\Requests\BookCreateRequest;
 use App\Repositories\BookRepository;
-use App\Services\AuthorService;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -39,13 +37,11 @@ class BookController extends Controller
     }
 
     /**
-     * @param AuthorCreateRequest $request
+     * @param BookCreateRequest $request
      * @return JsonResponse
-     * @throws Throwable
      */
-    public function create(AuthorCreateRequest $request): JsonResponse
+    public function create(BookCreateRequest $request): JsonResponse
     {
-
         return $this->success($this->bookRepository->create($request->validated()))->send();
     }
 

@@ -27,7 +27,8 @@ class BookCreateRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'string'
+                'string',
+                Rule::unique("books")
             ],
             'subject' => [
                 'required',
