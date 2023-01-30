@@ -20,14 +20,11 @@ enum RouteName: string
     /**
      * @return mixed
      */
-    public static function makeActionName(): mixed
+    public static function generateInfoMes(): mixed
     {
         return str()->of(Route::currentRouteName())->explode('.')->map(function ($name, $key) {
             return (collect(self::cases())->map(function ($item, $key) use ($name) {
-                if ($item->name == $name) {
-                    return $item->value;
-                }
-                return false;
+                return $item->name == $name ? $item->value : false;
             })->filter())->first();
         })->implode(' ');
     }

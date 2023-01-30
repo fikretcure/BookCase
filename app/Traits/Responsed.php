@@ -93,7 +93,7 @@ trait Responsed
         $this->status = $status ? $status : $this->status;
 
         return response()->json([
-            "info" => RouteName::makeActionName() . " " . $this->info_message,
+            "info" => RouteName::generateInfoMes() . " " . $this->info_message,
             "message" => $this->message ?? null,
             "data" => $this->data ?? null,
         ], $this->status);
