@@ -53,4 +53,10 @@ class Author extends Model
             get: fn($value) => $value ? env("APP_URL") . "/storage/avatar/" . $value : null,
         );
     }
+
+
+    /**
+     * @var string
+     */
+    public static string $reg_code = "Y";
 }
