@@ -21,7 +21,7 @@ class DocumentService
     public function upload($document): Stringable
     {
         $extension = $document->getClientOriginalExtension();
-        $path = $document->storeAs('docs', rand() . '.' . $extension, 'public');
+        $path = $document->storeAs('docs', str()->uuid() . "-" . str()->uuid() . '.' . $extension, 'public');
         return Str::of($path)->afterLast('docs/');
     }
 
