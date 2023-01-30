@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Author;
 use App\Traits\DisplayType;
+use App\Traits\GenerateRegCode;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 class AuthorRepository
 {
     use DisplayType;
+    use GenerateRegCode;
 
     /**
      * @var Builder
@@ -31,7 +33,7 @@ class AuthorRepository
     public function create(array $attributes): Model|Builder
     {
         return $this->model->create(
-            attributes: $attributes + ["reg_code" => rand()]
+            attributes: ["reg_code" => $this->generateRegCode(Author::class)] + $attributes
         );
     }
 
