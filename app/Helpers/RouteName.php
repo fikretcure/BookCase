@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 enum RouteName: string
 {
     case authors = "Yazar";
+    case books = "Kitap";
     case get = "Listeleme";
     case delete = "Silme";
     case update = "Güncelleme";
