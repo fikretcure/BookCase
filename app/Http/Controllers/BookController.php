@@ -6,7 +6,7 @@ use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Repositories\BookRepository;
-use App\Repositories\DocumentRepository;
+use App\Services\DocumentService;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -21,18 +21,18 @@ class BookController extends Controller
     private BookRepository $bookRepository;
 
     /**
-     * @var DocumentRepository
+     * @var DocumentService
      */
-    private DocumentRepository $documentRepository;
+    private DocumentService $documentService;
 
     /**
      * @param BookRepository $bookRepository
-     * @param DocumentRepository $documentRepository
+     * @param DocumentService $documentService
      */
-    public function __construct(BookRepository $bookRepository, DocumentRepository $documentRepository)
+    public function __construct(BookRepository $bookRepository, DocumentService $documentService)
     {
         $this->bookRepository = $bookRepository;
-        $this->documentRepository = $documentRepository;
+        $this->documentService = $documentService;
     }
 
     /**
@@ -51,13 +51,7 @@ class BookController extends Controller
     {
         $created_data = $this->bookRepository->create($request->validated());
 
-        collect($request->validated("avatars"))->each(function ($item) use ($created_data) {
-            $this->documentRepository->create([
-                "url" => $item["url"],
-                "model_id" => $created_data->id,
-                "model_type" => Book::class
-            ]);
-        });
+        $this->documentService->documentsGenerate($created_data->id, $request->validated("avatars"), Book::class);
 
         return $this->success($created_data)->send();
     }
