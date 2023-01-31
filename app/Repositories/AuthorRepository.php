@@ -19,7 +19,7 @@ class AuthorRepository extends Repository
 
     public function __construct()
     {
-        $this->model = Author::query()->withCount('author', "document")->with('author', 'document');
+        $this->model = Author::query()->withCount('book', "document")->with('book', 'document');
     }
 
     /**
@@ -31,7 +31,6 @@ class AuthorRepository extends Repository
         $data = $this->model->create(
             attributes: ["reg_code" => $this->generateRegCode(Author::class)] + $attributes
         );
-
         return $this->show($data["id"]);
     }
 
