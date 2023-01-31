@@ -39,7 +39,7 @@ class AuthorRepository extends Repository
      */
     public function show(int $id): Model|Collection|Builder|array
     {
-        return $this->model->withCount('book')->with('book')->findOrFail($id);
+        return $this->model->withCount('book', "document")->with('book', 'document')->findOrFail($id);
     }
 
     /**
@@ -48,7 +48,7 @@ class AuthorRepository extends Repository
      */
     public function get(array $filtered = null): Collection|array|LengthAwarePaginator
     {
-        $authors = $this->model->withCount('book')->with('book');
+        $authors = $this->model->withCount('book', "document")->with('book', "document");
 
         if (isset($filtered['full_name'])) {
             $authors = $authors->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$filtered['full_name']}%");
