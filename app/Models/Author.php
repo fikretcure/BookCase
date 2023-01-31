@@ -58,6 +58,6 @@ class Author extends Model
      */
     public function document(): MorphOne
     {
-        return $this->morphOne(Document::class, 'model');
+        return $this->morphOne(Document::class, 'model')->latest("id");
     }
 }
