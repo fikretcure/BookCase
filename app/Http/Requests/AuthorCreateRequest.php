@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FileHasInDocs;
+use App\Rules\FileTypeImage;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AuthorCreateRequest extends FormRequest
@@ -34,7 +36,9 @@ class AuthorCreateRequest extends FormRequest
             ],
             'avatar' => [
                 'nullable',
-                "string"
+                "string",
+                new FileHasInDocs(),
+                new FileTypeImage()
             ],
         ];
     }
