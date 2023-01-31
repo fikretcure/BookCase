@@ -58,9 +58,9 @@ class AuthorController extends Controller
     public function create(AuthorCreateRequest $request): JsonResponse
     {
         $created_data = $this->authorRepository->create($request->validated());
-        $this->documentService->documentsGenerate($created_data["id"], collect([["url" => $request->validated("avatar")]])->toArray(), Author::class);
+        $this->documentService->documentsGenerate($created_data["id"], [["url" => $request->validated("avatar")]], Author::class);
 
-        return $this->success($created_data)->send();
+        return $this->success($created_data->refresh())->send();
     }
 
     /**
@@ -80,7 +80,7 @@ class AuthorController extends Controller
      */
     public function update(AuthorUpdateRequest $request, int $id): JsonResponse
     {
-        $this->authorService->checkAvatar($request->validated("avatar"));
+        $this->documentService->documentsGenerate($id, [["url" => $request->validated("avatar")]], Author::class);
 
         return $this->success($this->authorRepository->update($request->validated(), $id))->send();
     }
