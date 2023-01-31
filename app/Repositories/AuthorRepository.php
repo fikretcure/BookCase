@@ -19,18 +19,20 @@ class AuthorRepository extends Repository
 
     public function __construct()
     {
-        $this->model = Author::query();
+        $this->model = Author::query()->withCount('author', "document")->with('author', 'document');
     }
 
     /**
      * @param array $attributes
-     * @return Model|Builder
+     * @return Model|Collection|Builder|array
      */
-    public function create(array $attributes): Model|Builder
+    public function create(array $attributes): Model|Collection|Builder|array
     {
-        return $this->model->create(
+        $data = $this->model->create(
             attributes: ["reg_code" => $this->generateRegCode(Author::class)] + $attributes
         );
+
+        return $this->show($data["id"]);
     }
 
     /**
@@ -39,7 +41,7 @@ class AuthorRepository extends Repository
      */
     public function show(int $id): Model|Collection|Builder|array
     {
-        return $this->model->withCount('book', "document")->with('book', 'document')->findOrFail($id);
+        return $this->model->findOrFail($id);
     }
 
     /**
@@ -48,15 +50,13 @@ class AuthorRepository extends Repository
      */
     public function get(array $filtered = null): Collection|array|LengthAwarePaginator
     {
-        $authors = $this->model->withCount('book', "document")->with('book', "document");
-
+        $data = $this->model;
         if (isset($filtered['full_name'])) {
-            $authors = $authors->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$filtered['full_name']}%");
+            $data = $data->where(DB::raw('concat(name, " ", surname)'), 'LIKE', "%{$filtered['full_name']}%");
         }
+        $data = $this->regCode($data);
 
-        $authors = $this->regCode($authors);
-
-        return $this->setDisplay($authors);
+        return $this->setDisplay($data);
     }
 
     /**
@@ -66,10 +66,10 @@ class AuthorRepository extends Repository
      */
     public function update(array $attributes, int $id): Model|Collection|Builder|array|null
     {
-        $author = $this->model->findOrFail($id);
-        $author->update($attributes);
+        $data = $this->model->findOrFail($id);
+        $data->update($attributes);
 
-        return $author->refresh();
+        return $this->show($id);
     }
 
     /**

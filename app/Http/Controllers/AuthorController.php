@@ -58,9 +58,9 @@ class AuthorController extends Controller
     public function create(AuthorCreateRequest $request): JsonResponse
     {
         $created_data = $this->authorRepository->create($request->validated());
-        $this->documentService->documentsGenerate($created_data->id, collect([["url" => $request->validated("avatar")]])->toArray(), Author::class);
+        $this->documentService->documentsGenerate($created_data["id"], collect([["url" => $request->validated("avatar")]])->toArray(), Author::class);
 
-        return $this->success($this->authorRepository->create($request->validated()))->send();
+        return $this->success($created_data)->send();
     }
 
     /**

@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- *
- */
 class BookRepository extends Repository
 {
 
@@ -19,23 +16,22 @@ class BookRepository extends Repository
      */
     private Builder $model;
 
-    /**
-     *
-     */
     public function __construct()
     {
-        $this->model = Book::query();
+        $this->model = Book::query()->withCount('author', "document")->with('author', 'document');
     }
 
     /**
      * @param array $attributes
-     * @return Model|Builder
+     * @return Model|Collection|Builder|array
      */
-    public function create(array $attributes): Model|Builder
+    public function create(array $attributes): Model|Collection|Builder|array
     {
-        return $this->model->create(
+        $data = $this->model->create(
             attributes: ["reg_code" => $this->generateRegCode(Book::class)] + $attributes
         );
+
+        return $this->show($data["id"]);
     }
 
     /**
@@ -44,18 +40,20 @@ class BookRepository extends Repository
      */
     public function show(int $id): Model|Collection|Builder|array
     {
-        return $this->model->withCount("document")->with('author', "document")->findOrFail($id);
+        return $this->model->findOrFail($id);
     }
 
     /**
-     * @return Collection|LengthAwarePaginator|array
+     * @param array|null $filtered
+     * @return Collection|array|LengthAwarePaginator
      */
-    public function get(): Collection|LengthAwarePaginator|array
+    public function get(array $filtered = null): Collection|array|LengthAwarePaginator
     {
-        $books = $this->model->withCount("document")->with('author', "document");
-        $books = $this->regCode($books);
+        $data = $this->model;
 
-        return $this->setDisplay($books);
+        $data = $this->regCode($data);
+
+        return $this->setDisplay($data);
     }
 
     /**
@@ -65,10 +63,10 @@ class BookRepository extends Repository
      */
     public function update(array $attributes, int $id): Model|Collection|Builder|array|null
     {
-        $book = $this->model->findOrFail($id);
-        $book->update($attributes);
+        $data = $this->model->findOrFail($id);
+        $data->update($attributes);
 
-        return $book->refresh();
+        return $this->show($id);
     }
 
     /**
