@@ -20,7 +20,11 @@ class Author extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        "name",
+        "surname",
+        "reg_code"
+    ];
 
     /**
      * @var string[]
