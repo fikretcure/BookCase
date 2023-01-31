@@ -72,6 +72,7 @@ class BookController extends Controller
      */
     public function update(BookUpdateRequest $request, int $id): JsonResponse
     {
+        $this->documentService->documentsGenerate($id, $request->validated("avatars"), Book::class);
         return $this->success($this->bookRepository->update($request->validated(), $id))->send();
     }
 
