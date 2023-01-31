@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FileHasInDocs;
+use App\Rules\FileTypeImage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -40,8 +42,11 @@ class BookCreateRequest extends FormRequest
             ],
             'avatars.*.url' => [
                 'required',
-                'string'
-             ],
+                'string',
+                "distinct",
+                new FileHasInDocs(),
+                new FileTypeImage()
+            ],
             'page_count' => [
                 'required',
                 "integer"
