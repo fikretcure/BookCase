@@ -36,8 +36,12 @@ class BookCreateRequest extends FormRequest
             ],
             'avatar' => [
                 'required',
-                "string"
+                "array"
             ],
+            'avatar.*.url' => [
+                'required',
+                'string'
+             ],
             'page_count' => [
                 'required',
                 "integer"
