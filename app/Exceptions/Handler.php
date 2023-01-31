@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception->getPrevious() instanceof RecordsNotFoundException) {
-                return $this->fail()->mes('İşlemini yapmak istediğiniz kayıt malesef bulunamadı.Yolunda gitmeyen bir şeyler var !')->send();
+                return $this->fail($exception->getMessage())->mes('İşlemini yapmak istediğiniz kayıt malesef bulunamadı.Yolunda gitmeyen bir şeyler var !')->send();
             }
 
             return $this->fail($exception->getMessage())->mes("'Dostumm ... Bir şeyler ters gitti anlıyo musun !... tekrar denemelisin !'")->send(402);
