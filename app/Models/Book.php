@@ -20,7 +20,13 @@ class Book extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = [
+        "name",
+        "subject",
+        "page_count",
+        "author_id",
+        "reg_code"
+    ];
 
 
     /**
@@ -41,6 +47,6 @@ class Book extends Model
      */
     public function document(): MorphMany
     {
-        return $this->morphMany(Document::class, 'imageable');
+        return $this->morphMany(Document::class, 'model');
     }
 }
