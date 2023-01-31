@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('reg_code');
-            $table->string('avatar')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
