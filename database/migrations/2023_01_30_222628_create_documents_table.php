@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string("url");
-            $table->integer("imageable_id");
-            $table->string("imageable_type");
+            $table->integer("model_id");
+            $table->string("model_type");
             $table->timestamps();
         });
     }
