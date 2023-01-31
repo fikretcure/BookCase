@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookUpdateRequest;
+use App\Models\Book;
 use App\Repositories\BookRepository;
+use App\Repositories\DocumentRepository;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -18,13 +20,19 @@ class BookController extends Controller
      */
     private BookRepository $bookRepository;
 
+    /**
+     * @var DocumentRepository
+     */
+    private DocumentRepository $documentRepository;
 
     /**
      * @param BookRepository $bookRepository
+     * @param DocumentRepository $documentRepository
      */
-    public function __construct(BookRepository $bookRepository)
+    public function __construct(BookRepository $bookRepository, DocumentRepository $documentRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->documentRepository = $documentRepository;
     }
 
     /**
@@ -32,7 +40,7 @@ class BookController extends Controller
      */
     public function get(): JsonResponse
     {
-        return $this->success($this->bookRepository->get(request()->query()))->send();
+        return $this->success($this->bookRepository->get())->send();
     }
 
     /**
@@ -41,7 +49,17 @@ class BookController extends Controller
      */
     public function create(BookCreateRequest $request): JsonResponse
     {
-        return $this->success($this->bookRepository->create($request->validated()))->send();
+        $created_data = $this->bookRepository->create($request->validated());
+
+        collect($request->validated("avatars"))->each(function ($item) use ($created_data) {
+            $this->documentRepository->create([
+                "url" => $item["url"],
+                "model_id" => $created_data->id,
+                "model_type" => Book::class
+            ]);
+        });
+
+        return $this->success($created_data)->send();
     }
 
     /**
@@ -60,7 +78,6 @@ class BookController extends Controller
      */
     public function update(BookUpdateRequest $request, int $id): JsonResponse
     {
-
         return $this->success($this->bookRepository->update($request->validated(), $id))->send();
     }
 

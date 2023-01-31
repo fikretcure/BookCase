@@ -34,11 +34,11 @@ class BookCreateRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'avatar' => [
+            'avatars' => [
                 'required',
                 "array"
             ],
-            'avatar.*.url' => [
+            'avatars.*.url' => [
                 'required',
                 'string'
              ],
