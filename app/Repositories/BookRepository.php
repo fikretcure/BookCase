@@ -2,13 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\RepositoryInterface;
 use App\Models\Book;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class BookRepository extends Repository
+class BookRepository extends Repository implements RepositoryInterface
 {
 
     /**
