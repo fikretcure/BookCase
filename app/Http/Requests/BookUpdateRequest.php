@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FileHasInDocs;
+use App\Rules\FileTypeImage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,24 +28,31 @@ class BookUpdateRequest extends FormRequest
     {
         return [
             'name' => [
-                'required',
+                'prohibits',
                 'string',
                 Rule::unique("books")->ignore($this->id)
             ],
             'subject' => [
-                'required',
+                'prohibits',
                 'string'
             ],
-            'avatar' => [
+            'avatars' => [
+                'prohibits',
+                "array"
+            ],
+            'avatars.*.url' => [
                 'required',
-                "string"
+                'string',
+                "distinct",
+                new FileHasInDocs(),
+                new FileTypeImage()
             ],
             'page_count' => [
-                'required',
+                'prohibits',
                 "integer"
             ],
             'author_id' => [
-                'required',
+                'prohibits',
                 "integer",
                 Rule::exists('authors', "id")
             ],
