@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return response()->json("Hi Dear , Welcome BookCase");
+    return response()->json(env("WEB_MES"));
 });
