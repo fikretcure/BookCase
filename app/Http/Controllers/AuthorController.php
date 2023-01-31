@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthorCreateRequest;
 use App\Http\Requests\AuthorUpdateRequest;
+use App\Models\Author;
 use App\Repositories\AuthorRepository;
 use App\Services\AuthorService;
+use App\Services\DocumentService;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -25,6 +27,11 @@ class AuthorController extends Controller
     private AuthorService $authorService;
 
     /**
+     * @var DocumentService
+     */
+    private DocumentService $documentService;
+
+    /**
      * @param AuthorRepository $authorRepository
      * @param AuthorService $authorService
      */
@@ -32,6 +39,7 @@ class AuthorController extends Controller
     {
         $this->authorRepository = $authorRepository;
         $this->authorService = $authorService;
+        $this->documentService = new DocumentService();
     }
 
     /**
@@ -49,7 +57,8 @@ class AuthorController extends Controller
      */
     public function create(AuthorCreateRequest $request): JsonResponse
     {
-        $this->authorService->checkAvatar($request->validated("avatar"));
+        $created_data = $this->authorRepository->create($request->validated());
+        $this->documentService->documentsGenerate($created_data->id, collect([["url" => $request->validated("avatar")]])->toArray(), Author::class);
 
         return $this->success($this->authorRepository->create($request->validated()))->send();
     }
