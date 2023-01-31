@@ -8,31 +8,19 @@ use Illuminate\Database\Seeder;
 class AuthorsSeeder extends Seeder
 {
     /**
-     * @var AuthorRepository
-     */
-    private AuthorRepository $authorRepository;
-
-    /**
-     * @param  AuthorRepository  $authorRepository
-     */
-    public function __construct(AuthorRepository $authorRepository)
-    {
-        $this->authorRepository = $authorRepository;
-    }
-
-    /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run(): void
     {
-        $this->authorRepository->create([
+        (new AuthorRepository())->create([
             'name' => 'Fikret',
             'surname' => 'Cüre',
         ]);
 
-        $this->authorRepository->create([
+
+        (new AuthorRepository())->create([
             'name' => 'Semiha',
             'surname' => 'Cüre',
         ]);
