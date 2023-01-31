@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (Throwable $exception, $request) {
             if ($exception instanceof ValidationException) {
-                return $this->fail($exception->validator->getMessageBag())->send(402);
+                return $this->fail($exception->validator->getMessageBag())->mes("validation")->send(402);
             }
 
             if ($exception->getPrevious() instanceof RecordsNotFoundException) {
