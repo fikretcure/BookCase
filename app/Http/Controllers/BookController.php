@@ -53,7 +53,7 @@ class BookController extends Controller
 
         $this->documentService->documentsGenerate($created_data->id, $request->validated("avatars"), Book::class);
 
-        return $this->success($created_data)->send();
+        return $this->success($created_data->refresh())->send();
     }
 
     /**

@@ -66,14 +66,15 @@ class DocumentService
     public function documentsGenerate($model_id, $url, $model_type): void
     {
         collect($url)->each(function ($item) use ($model_id, $model_type) {
-            $this->documentRepository->create([
-                "url" => $item["url"],
-                "model_id" => $model_id,
-                "model_type" => $model_type
-            ]);
-            $this->fileMove("docs/" . $item["url"], "avatar/" . $item["url"]);
+            if ($item["url"]) {
+                $this->documentRepository->create([
+                    "url" => $item["url"],
+                    "model_id" => $model_id,
+                    "model_type" => $model_type
+                ]);
+                $this->fileMove("docs/" . $item["url"], "avatar/" . $item["url"]);
+            }
         });
     }
-
 
 }
