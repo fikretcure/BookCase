@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return response()->json(env("WEB_MES"));
-});
+    return response()->json(str()->of(env("WEB_MES"))->explode(","));
+})->name("home.index");
 
 Route::name("authors.")->prefix('authors')->controller(AuthorController::class)->group(function () {
     Route::name("get")->get(null, 'get');
