@@ -8,16 +8,13 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('tag_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('reg_code');
+            $table->foreignId('tag_id')->constrained();
+            $table->morphs('taggable');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,11 +22,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('taggables');
     }
 };
