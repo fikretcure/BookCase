@@ -21,13 +21,11 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        Route::pattern('id', '[0-9]+');
         $this->configureRateLimiting();
+
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
@@ -36,18 +34,12 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
-
-        Route::fallback(function () {
-            return response()->json('Heyy Dostum !! Yolunu kaybettin sanırım ...', 404);
-        });
     }
 
     /**
      * Configure the rate limiters for the application.
-     *
-     * @return void
      */
-    protected function configureRateLimiting()
+    protected function configureRateLimiting(): void
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());

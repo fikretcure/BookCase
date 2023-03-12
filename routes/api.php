@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\DocumentController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,28 +9,11 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return response()->json(str()->of(env("WEB_MES"))->explode(","));
-})->name("home.index");
 
-Route::name("authors.")->prefix('authors')->controller(AuthorController::class)->group(function () {
-    Route::name("get")->get(null, 'get');
-    Route::name("create")->post(null, 'create');
-    Route::name("show")->get("{id}", 'show');
-    Route::name("delete")->delete("{id}", 'delete');
-    Route::name("update")->put("{id}", 'update');
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });
-
-Route::name("books.")->prefix('books')->controller(BookController::class)->group(function () {
-    Route::name("get")->get(null, 'get');
-    Route::name("create")->post(null, 'create');
-    Route::name("show")->get("{id}", 'show');
-    Route::name("delete")->delete("{id}", 'delete');
-    Route::name("update")->put("{id}", 'update');
-});
-
-Route::post('upload', [DocumentController::class, 'upload']);
